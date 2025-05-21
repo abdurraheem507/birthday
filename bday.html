@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday USTAAD G!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #ffe29f, #ffa99f);
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    .card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 50px;
+      border-radius: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      text-align: center;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: #e94e77;
+    }
+
+    p {
+      font-size: 1.4em;
+      color: #555;
+    }
+
+    .confetti {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🎉 Happy Birthday, USTAAD G! 🎂</h1>
+    <p>Wishing you joy, laughter, and endless success! You're truly one of a kind. 💯</p>
+  </div>
+
+  <!-- Confetti Script -->
+  <canvas class="confetti"></canvas>
+  <script>
+    const canvas = document.querySelector('.confetti');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const confettiCount = 300;
+    const confetti = [];
+
+    for (let i = 0; i < confettiCount; i++) {
+      confetti.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        r: Math.random() * 6 + 2,
+        d: Math.random() * confettiCount,
+        color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+        tilt: Math.floor(Math.random() * 10) - 10,
+        tiltAngle: 0
+      });
+    }
+
+    function drawConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confetti.forEach((conf, i) => {
+        ctx.beginPath();
+        ctx.lineWidth = conf.r;
+        ctx.strokeStyle = conf.color;
+        ctx.moveTo(conf.x + conf.tilt + conf.r / 2, conf.y);
+        ctx.lineTo(conf.x + conf.tilt, conf.y + conf.tilt + conf.r / 2);
+        ctx.stroke();
+      });
+
+      updateConfetti();
+    }
+
+    function updateConfetti() {
+      confetti.forEach((conf, i) => {
+        conf.tiltAngle += 0.05;
+        conf.y += Math.cos(conf.d) + 1 + conf.r / 2;
+        conf.tilt = Math.sin(conf.tiltAngle) * 15;
+
+        if (conf.y > canvas.height) {
+          conf.y = -10;
+          conf.x = Math.random() * canvas.width;
+        }
+      });
+    }
+
+    setInterval(drawConfetti, 20);
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>

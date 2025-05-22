@@ -28,20 +28,21 @@
       z-index: 2;
     }
 
-    h1 {
-      font-size: 2.8em;
-      color: #e94e77;
-      margin-bottom: 10px;
-    }
-
-    p {
+    h1, p, .thank-you {
       font-size: 1.2em;
       color: #444;
       margin: 10px 0;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid transparent;
+    }
+
+    h1 {
+      font-size: 2.3em;
+      color: #e94e77;
     }
 
     .thank-you {
-      margin-top: 20px;
       font-style: italic;
       color: #666;
       font-size: 1.1em;
@@ -54,14 +55,23 @@
       z-index: 1;
       pointer-events: none;
     }
+
+    audio {
+      display: none;
+    }
   </style>
 </head>
 <body>
+  <!-- Background Music -->
+  <audio autoplay loop>
+    <source src="wish.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
   <div class="card">
-    <h1>🎉 Happy Birthday, USTAAD G! (USTAAD MM SB) 🎂</h1>
-    <p>Wishing you a day full of joy, laughter, and endless blessings.</p>
-    <p class="thank-you">Thank you for always being there — to listen, guide, and support me.
-You've never hesitated to give your time, your opinion, or your honest advice whenever I needed it. . </p>
+    <h1 class="typewriter">🎉 Happy Birthday, USTAAD G! (USTAAD MM SB) 🎂</h1>
+    <p class="typewriter">Wishing you a day full of joy, laughter, and endless blessings.</p>
+    <p class="thank-you typewriter">Thank you for always being there — to listen, guide, and support me. You've never hesitated to give your time, your opinion, or your honest advice whenever I needed it.</p>
   </div>
 
   <!-- Confetti Script -->
@@ -118,6 +128,24 @@ You've never hesitated to give your time, your opinion, or your honest advice wh
     window.addEventListener('resize', () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+    });
+
+    // Typewriter effect
+    const elements = document.querySelectorAll('.typewriter');
+    elements.forEach((el, i) => {
+      const text = el.textContent;
+      el.textContent = '';
+      let j = 0;
+      setTimeout(() => {
+        const interval = setInterval(() => {
+          if (j < text.length) {
+            el.textContent += text.charAt(j);
+            j++;
+          } else {
+            clearInterval(interval);
+          }
+        }, 40);
+      }, i * 1500); // Delay between each element's typewriter
     });
   </script>
 </body>

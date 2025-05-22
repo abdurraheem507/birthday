@@ -10,14 +10,14 @@
       padding: 0;
       background: linear-gradient(to bottom right, #ffe29f, #ffa99f);
       font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       overflow: hidden;
     }
 
     .card {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
       background: white;
       padding: 50px 40px;
       border-radius: 25px;
@@ -26,26 +26,31 @@
       max-width: 90%;
       width: 400px;
       z-index: 2;
-    }
-
-    h1, p, .thank-you {
-      font-size: 1.2em;
-      color: #444;
-      margin: 10px 0;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 2px solid transparent;
+      box-sizing: border-box;
     }
 
     h1 {
-      font-size: 2.3em;
+      font-size: 2.2em;
       color: #e94e77;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.1em;
+      color: #444;
+      margin: 10px 0;
     }
 
     .thank-you {
+      margin-top: 20px;
       font-style: italic;
       color: #666;
       font-size: 1.1em;
+    }
+
+    .typewriter {
+      white-space: normal;
+      overflow-wrap: break-word;
     }
 
     canvas.confetti {
@@ -55,14 +60,11 @@
       z-index: 1;
       pointer-events: none;
     }
-
-    audio {
-      display: none;
-    }
   </style>
 </head>
 <body>
-  <!-- Background Music -->
+
+  <!-- Music -->
   <audio autoplay loop>
     <source src="wish.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
@@ -71,12 +73,16 @@
   <div class="card">
     <h1 class="typewriter">🎉 Happy Birthday, USTAAD G! (USTAAD MM SB) 🎂</h1>
     <p class="typewriter">Wishing you a day full of joy, laughter, and endless blessings.</p>
-    <p class="thank-you typewriter">Thank you for always being there — to listen, guide, and support me. You've never hesitated to give your time, your opinion, or your honest advice whenever I needed it.</p>
+    <p class="typewriter thank-you">
+      Thank you for always being there — to listen, guide, and support me.  SHUKRIYA SIR .
+    </p>
   </div>
 
-  <!-- Confetti Script -->
+  <!-- Confetti Canvas -->
   <canvas class="confetti"></canvas>
+
   <script>
+    // Confetti
     const canvas = document.querySelector('.confetti');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
@@ -99,7 +105,7 @@
 
     function drawConfetti() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      confetti.forEach((conf, i) => {
+      confetti.forEach((conf) => {
         ctx.beginPath();
         ctx.lineWidth = conf.r;
         ctx.strokeStyle = conf.color;
@@ -107,16 +113,14 @@
         ctx.lineTo(conf.x + conf.tilt, conf.y + conf.tilt + conf.r / 2);
         ctx.stroke();
       });
-
       updateConfetti();
     }
 
     function updateConfetti() {
-      confetti.forEach((conf, i) => {
+      confetti.forEach((conf) => {
         conf.tiltAngle += 0.05;
         conf.y += Math.cos(conf.d) + 1 + conf.r / 2;
         conf.tilt = Math.sin(conf.tiltAngle) * 15;
-
         if (conf.y > canvas.height) {
           conf.y = -10;
           conf.x = Math.random() * canvas.width;
@@ -130,22 +134,20 @@
       canvas.height = window.innerHeight;
     });
 
-    // Typewriter effect
+    // Typewriter Effect
     const elements = document.querySelectorAll('.typewriter');
-    elements.forEach((el, i) => {
+    elements.forEach((el) => {
       const text = el.textContent;
       el.textContent = '';
-      let j = 0;
-      setTimeout(() => {
-        const interval = setInterval(() => {
-          if (j < text.length) {
-            el.textContent += text.charAt(j);
-            j++;
-          } else {
-            clearInterval(interval);
-          }
-        }, 40);
-      }, i * 1500); // Delay between each element's typewriter
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < text.length) {
+          el.textContent += text.charAt(i);
+          i++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 30);
     });
   </script>
 </body>
